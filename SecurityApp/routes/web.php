@@ -7,7 +7,7 @@ Route::get('/', function () {
    if (auth()->check()){
         return redirect()->route('dashboard');
    }
-   return view('landingpage')
+   return view('landingpage');
 })->name('landingpage');
 
 Auth::routes();

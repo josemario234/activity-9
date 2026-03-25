@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers; 
 use Illuminate\Support\Facades\Hash; 
 use Illuminate\Support\Facades\Validator; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeEmail;
 
 class RegisterController extends Controller 
 { 
@@ -38,4 +41,9 @@ class RegisterController extends Controller
       'password' => Hash::make($data['password']), 
     ]); 
   } 
+
+  protected function registered(Request $request, $user){
+    Mail::to($user->email)->send(new WelcomeEmail($user));
+    return redirect($this->redirectPath());
+  }
 } 
